@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ana Sayfa</title>
+</head>
+<body>
+    <h2>Hoş geldin, {{ session['user_name'] if 'user_name' in session else 'Ziyaretçi' }}!</h2>
+    {% if 'user_id' in session %}
+        <a href="{{ url_for('auth.logout') }}">Çıkış Yap</a>
+    {% else %}
+        <a href="{{ url_for('auth.login') }}">Giriş Yap</a>
+    {% endif %}
+</body>
+</html> 
