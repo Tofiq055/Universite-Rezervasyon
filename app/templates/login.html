@@ -1,27 +1,19 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Giriş Yap</title>
-</head>
-<body>
-    <h2>Giriş Yap</h2>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, message in messages %}
-          <li style="color: {% if category == 'danger' %}red{% elif category == 'success' %}green{% else %}black{% endif %};">{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+{% extends "base.html" %}
+
+{% block title %}Giriş Yap{% endblock %}
+
+{% block content %}
+    <h2>Sisteme Giriş Yap</h2>
     <form method="post">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br>
-        <label>Şifre:</label><br>
-        <input type="password" name="password" required><br><br>
+        <label for="identifier">Öğrenci / Personel Numarası:</label>
+        <input type="text" id="identifier" name="identifier" required>
+        
+        <label for="password">Şifre:</label>
+        <input type="password" id="password" name="password" required>
+        
         <button type="submit">Giriş Yap</button>
     </form>
-    <p>Hesabınız yok mu? <a href="{{ url_for('auth.register') }}">Kayıt Ol</a></p>
-</body>
-</html> 
+    <div class="form-links">
+        <a href="#" onclick="alert('Bu özellik şu an aktif değildir.'); return false;">Şifremi Unuttum</a>
+    </div>
+{% endblock %} 

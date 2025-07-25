@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Laboratuvar Rezervasyon Sistemi{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="brand">Üniversite Rezervasyon</a>
+        <div class="nav-links">
+            {% if 'user_id' in session %}
+                {% if session['user_role'] == 'teacher' %}
+                    <a href="#">Öğretmen Paneli</a>
+                {% else %}
+                    <a href="#">Öğrenci Paneli</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}">Çıkış Yap</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Giriş Yap</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="flash-{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html> 

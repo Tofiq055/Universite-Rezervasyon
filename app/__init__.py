@@ -1,27 +1,29 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-# from flask_sqlalchemy import SQLAlchemy  # İleride kullanılacak
-
-# db = SQLAlchemy()  # İleride kullanılacak
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
-    """
-    Flask uygulamasını başlatan ve blueprint'leri kaydeden fabrika fonksiyonu.
-    """
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
-    # Blueprint'leri import ve register et
-    from app.routes.main import main_bp
     from app.routes.auth import auth_bp
-    app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
 
-    # User modelini import et (migrate için)
-    from app.models.user import User
+    from app.routes.student import student_bp
+    app.register_blueprint(student_bp)
+    from app.routes.teacher import teacher_bp
+    app.register_blueprint(teacher_bp)
+
+    @app.route('/')
+    def index():
+        return redirect(url_for('auth.login'))
+
+    from app.models import User, Device, Category, Reservation
 
     return app 
