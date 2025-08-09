@@ -27,7 +27,7 @@ project_root/
 1. Depoyu klonlayın:
    ```bash
    git clone https://github.com/Tofiq055/Universite-Rezervasyon
-   cd reservation
+   cd Universite-Rezervasyon
    ```
 2. Sanal ortam oluşturun ve aktif edin (isteğe bağlı):
    ```bash
