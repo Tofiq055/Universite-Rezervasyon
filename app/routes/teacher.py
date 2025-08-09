@@ -74,3 +74,68 @@ def reject_reservation(reservation_id):
     db.session.commit()
     flash(f'{reservation.requester.name} kullanıcısının {reservation.device.name} için yaptığı rezervasyon isteği reddedildi.', 'info')
     return redirect(url_for('teacher.dashboard'))
+
+    # ... (dosyanın üst kısmı ve diğer rotalar aynı kalacak) ...
+
+# --- YENİ EKLENEN ROTA: KATEGORİ TOPLU ONAY ---
+@teacher_bp.route('/approve/category/<int:category_id>')
+@login_required
+@teacher_required
+def approve_category(category_id):
+    # İlgili kategorideki tüm 'pending' durumundaki rezervasyonları bul
+    reservations_to_approve = Reservation.query.join(Device).filter(
+        Device.category_id == category_id,
+        Reservation.status == 'pending'
+    ).all()
+
+    if not reservations_to_approve:
+        flash('Bu kategoride onaylanacak bekleyen istek bulunmuyor.', 'info')
+        return redirect(url_for('teacher.dashboard'))
+
+    approved_count = 0
+    for res in reservations_to_approve:
+        # Stok kontrolü yap, eğer müsaitse onayla
+        approved_on_date = Reservation.query.filter_by(
+            device_id=res.device_id,
+            reservation_date=res.reservation_date,
+            status='approved'
+        ).count()
+        if approved_on_date < res.device.quantity:
+            res.status = 'approved'
+            approved_count += 1
+
+    db.session.commit()
+    flash(f'{approved_count} adet rezervasyon isteği başarıyla onaylandı. Stok yetersizliği nedeniyle bazıları onaylanmamış olabilir.', 'success')
+    return redirect(url_for('teacher.dashboard'))
+
+# --- YENİ EKLENEN ROTA: KATEGORİ TOPLU REDDETME ---
+@teacher_bp.route('/reject/category/<int:category_id>')
+@login_required
+@teacher_required
+def reject_category(category_id):
+    # İlgili kategorideki tüm 'pending' durumundaki rezervasyonları bul
+    reservations_to_reject = Reservation.query.join(Device).filter(
+        Device.category_id == category_id,
+        Reservation.status == 'pending'
+    ).all()
+
+    if not reservations_to_reject:
+        flash('Bu kategoride reddedilecek bekleyen istek bulunmuyor.', 'info')
+        return redirect(url_for('teacher.dashboard'))
+    
+    rejected_count = len(reservations_to_reject)
+    for res in reservations_to_reject:
+        res.status = 'rejected'
+        
+    db.session.commit()
+    flash(f'{rejected_count} adet rezervasyon isteği başarıyla reddedildi.', 'info')
+    return redirect(url_for('teacher.dashboard'))
+
+
+@teacher_bp.route('/approved_reservations')
+@login_required
+@teacher_required
+def approved_reservations():
+    """Onaylanmış tüm rezervasyonları listeler."""
+    reservations = Reservation.query.filter_by(status='approved').order_by(Reservation.reservation_date.desc()).all()
+    return render_template('approved_reservations_teacher.html', reservations=reservations)

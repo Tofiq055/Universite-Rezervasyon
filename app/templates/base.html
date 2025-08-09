@@ -9,20 +9,22 @@
 <body>
 
     <nav class="navbar">
-        <a href="/" class="brand">Üniversite Rezervasyon</a>
-        <div class="nav-links">
-            {% if 'user_id' in session %}
-                {% if session['user_role'] == 'teacher' %}
-                    <a href="#">Öğretmen Paneli</a>
-                {% else %}
-                    <a href="#">Öğrenci Paneli</a>
-                {% endif %}
-                <a href="{{ url_for('auth.logout') }}">Çıkış Yap</a>
+    <a href="/" class="brand">Üniversite Rezervasyon</a>
+    <div class="nav-links">
+        {% if 'user_id' in session %}
+            {% if session['user_role'] == 'teacher' %}
+                <a href="{{ url_for('teacher.dashboard') }}">Öğretmen Paneli</a>
+                <a href="{{ url_for('teacher.approved_reservations') }}">Onaylananlar</a>
             {% else %}
-                <a href="{{ url_for('auth.login') }}">Giriş Yap</a>
+                <a href="{{ url_for('student.dashboard') }}">Cihazlar</a>
+                <a href="{{ url_for('student.my_reservations') }}">Rezervasyonlarım</a>
             {% endif %}
-        </div>
-    </nav>
+            <a href="{{ url_for('auth.logout') }}">Çıkış Yap</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Giriş Yap</a>
+        {% endif %}
+    </div>
+</nav>
 
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}

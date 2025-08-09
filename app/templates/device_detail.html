@@ -13,20 +13,22 @@
     <p>Lütfen rezervasyon yapmak istediğiniz müsait bir tarih seçin.</p>
     
     <form method="POST">
-        <div class="calendar-container">
-            {% for day, status in availability.items() %}
-                <div class="calendar-day">
-                    <label class="date-label {% if status == 'Dolu' %}disabled{% endif %}">
-                        <input type="radio" name="reservation_date" value="{{ day.isoformat() }}" {% if status == 'Dolu' %}disabled{% endif %}>
-                        <div class="date-content">
-                            <div class="day-month">{{ day.strftime('%d %b') }}</div>
-                            <div class="day-year">{{ day.year }}</div>
-                            <div class="day-status status-{{ status | lower }}">{{ status }}</div>
-                        </div>
-                    </label>
+<div class="calendar-container">
+    {% for day, status in availability.items() %}
+        <div class="calendar-day">
+            {# DEĞİŞİKLİK: 'Onay Bekliyor' durumunu da 'disabled' (pasif) yap #}
+            <label class="date-label {% if status == 'Dolu' or status == 'Onay Bekliyor' %}disabled{% endif %}">
+                <input type="radio" name="reservation_date" value="{{ day.isoformat() }}" {% if status == 'Dolu' or status == 'Onay Bekliyor' %}disabled{% endif %}>
+                <div class="date-content">
+                    <div class="day-month">{{ day.strftime('%d %b') }}</div>
+                    <div class="day-year">{{ day.year }}</div>
+                    {# DEĞİŞİKLİK: CSS sınıfı için boşlukları tire ile değiştir #}
+                    <div class="day-status status-{{ status | replace(' ', '-') | lower }}">{{ status }}</div>
                 </div>
-            {% endfor %}
+            </label>
         </div>
+    {% endfor %}
+</div>
         <button type="submit" class="btn" style="margin-top: 1.5rem;">Rezervasyon İsteği Gönder</button>
     </form>
 {% endblock %}

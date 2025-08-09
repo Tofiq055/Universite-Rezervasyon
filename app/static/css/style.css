@@ -331,3 +331,83 @@ textarea.form-control {
 .btn-success:hover { background-color: #27ae60; }
 .btn-danger { background-color: #e74c3c; }
 .btn-danger:hover { background-color: #c0392b; }
+/* Öğretmen ve Öğrenci Paneli Ortak Düzenlemeleri */
+.dashboard-main-content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.student-inventory {
+    flex: 1;
+}
+
+.my-reservations {
+    flex: 1.5;
+    background-color: #fdfdfd;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.reservation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-left-width: 5px;
+    border-left-style: solid;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.reservation-status {
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.9em;
+    color: white;
+}
+
+/* Rezervasyon Durum Renkleri */
+.status-pending { border-color: #f39c12; }
+.status-pending .reservation-status { background-color: #f39c12; }
+
+.status-approved { border-color: #2ecc71; }
+.status-approved .reservation-status { background-color: #2ecc71; }
+
+.status-rejected { border-color: #e74c3c; }
+.status-rejected .reservation-status { background-color: #e74c3c; }
+/* Yeni durum etiketi için stil */
+.status-onay-bekliyor { color: #f39c12; } /* Turuncu renk */
+/* Kategori Başlığı ve Toplu İşlem Butonları */
+.request-category-block {
+    margin-bottom: 2rem;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ecf0f1;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.category-header h4 {
+    margin: 0;
+    background: none;
+    padding: 0;
+}
+
+.bulk-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Butonların boyutunu küçültmek için */
+.btn-sm {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8em;
+}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Onaylanmış Rezervasyonlar{% endblock %}
+
+{% block content %}
+    <h2>Onaylanmış Tüm Rezervasyonlar</h2>
+    <p>Burada, sistemdeki tüm onaylanmış rezervasyonların listesini görebilirsiniz.</p>
+
+    <div class="reservations-list">
+        {% if reservations %}
+            <ul class="request-list">
+                {% for reservation in reservations %}
+                    <li class="reservation-item status-approved">
+                        <div class="request-info">
+                             <strong>{{ reservation.reservation_date.strftime('%d-%m-%Y') }}</strong> tarihinde
+                             <strong>{{ reservation.device.name }}</strong> cihazı,
+                             <strong>{{ reservation.requester.name }}</strong> kullanıcısına rezerve edilmiştir.
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-text">Henüz onaylanmış bir rezervasyon bulunmuyor.</p>
+        {% endif %}
+    </div>
+{% endblock %}
