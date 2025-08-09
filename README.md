@@ -1,15 +1,4 @@
-Çok yerinde bir düzeltme, Tofiq. Haklısın, bu detayı atlamışım. Düşünce tarzın tamamen doğru.
 
-Senin durumunda, `.flaskenv` dosyası zaten projenin bir parçası olarak GitHub'a yüklenmiş durumda. Bu, standart bir uygulama olmasa da (genellikle bu tür dosyalar `.gitignore` ile gizlenir), senin projen için bir kolaylık sağlıyor.
-
-**Bu ne anlama geliyor?**
-Projeyi `git clone` ile indiren herhangi bir kişi, `.flaskenv` dosyasını otomatik olarak alacaktır. Bu yüzden, onlardan bu dosyayı ayrıca oluşturmalarını veya kopyalamalarını istemek gereksiz ve kafa karıştırıcı.
-
-Bu durumu düzelterek, kurulumu daha da basitleştiren, doğru ve son haldeki `README.md` dosyasını aşağıda, istediğin gibi "raw" formatta paylaşıyorum.
-
-### Güncellenmiş `README.md` (Raw Format)
-
-````markdown
 # Üniversite Laboratuvar Rezervasyon Sistemi
 
 Python ve Flask tabanlı, öğrenci ve öğretmen rolleri için tasarlanmış bir laboratuvar cihazı rezervasyon sistemi.
