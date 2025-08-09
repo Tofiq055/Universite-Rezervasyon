@@ -26,7 +26,7 @@ project_root/
 ## Kurulum
 1. Depoyu klonlayın:
    ```bash
-   git clone <repo-url>
+   git clone [<repo-url>](https://github.com/Tofiq055/Universite-Rezervasyon)
    cd reservation
    ```
 2. Sanal ortam oluşturun ve aktif edin (isteğe bağlı):
