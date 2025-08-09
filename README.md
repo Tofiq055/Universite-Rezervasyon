@@ -1,4 +1,15 @@
+Çok yerinde bir düzeltme, Tofiq. Haklısın, bu detayı atlamışım. Düşünce tarzın tamamen doğru.
 
+Senin durumunda, `.flaskenv` dosyası zaten projenin bir parçası olarak GitHub'a yüklenmiş durumda. Bu, standart bir uygulama olmasa da (genellikle bu tür dosyalar `.gitignore` ile gizlenir), senin projen için bir kolaylık sağlıyor.
+
+**Bu ne anlama geliyor?**
+Projeyi `git clone` ile indiren herhangi bir kişi, `.flaskenv` dosyasını otomatik olarak alacaktır. Bu yüzden, onlardan bu dosyayı ayrıca oluşturmalarını veya kopyalamalarını istemek gereksiz ve kafa karıştırıcı.
+
+Bu durumu düzelterek, kurulumu daha da basitleştiren, doğru ve son haldeki `README.md` dosyasını aşağıda, istediğin gibi "raw" formatta paylaşıyorum.
+
+### Güncellenmiş `README.md` (Raw Format)
+
+````markdown
 # Üniversite Laboratuvar Rezervasyon Sistemi
 
 Python ve Flask tabanlı, öğrenci ve öğretmen rolleri için tasarlanmış bir laboratuvar cihazı rezervasyon sistemi.
@@ -16,7 +27,7 @@ Projeyi yerel makinenizde sıfırdan kurup çalıştırmak için aşağıdaki ad
 
 **1. Depoyu Klonlayın:**
 ```bash
-git clone https://github.com/Tofiq055/Universite-Rezervasyon
+git clone [https://github.com/Tofiq055/Universite-Rezervasyon.git](https://github.com/Tofiq055/Universite-Rezervasyon.git)
 cd Universite-Rezervasyon
 ````
 
@@ -41,20 +52,8 @@ Projenin ihtiyaç duyduğu tüm kütüphaneleri `requirements.txt` dosyasından 
 pip install -r requirements.txt
 ```
 
-**4. Ortam Değişkenleri Dosyasını Oluşturun:**
-Projenin çalışması için gerekli olan `FLASK_APP` değişkenini ayarlayın. `.flaskenv.example` dosyasını kopyalayarak `.flaskenv` adında yeni bir dosya oluşturun.
-
-```bash
-# Windows:
-copy .flaskenv.example .flaskenv
-# macOS / Linux:
-# cp .flaskenv.example .flaskenv
-```
-
-Bu dosyanın içinde `FLASK_APP=run.py` yazdığından emin olun.
-
-**5. Veritabanını Oluşturun:**
-Boş veritabanı dosyasını ve tabloları oluşturmak için aşağıdaki `flask db` komutunu çalıştırın:
+**4. Veritabanını Oluşturun:**
+Boş veritabanı dosyasını ve tabloları oluşturmak için aşağıdaki `flask db` komutunu çalıştırın.
 
 ```bash
 flask db upgrade
@@ -62,7 +61,7 @@ flask db upgrade
 
 Bu komut, proje ana dizininde `db.sqlite3` adında bir veritabanı dosyası oluşturacaktır.
 
-**6. İlk Kullanıcıları Oluşturun (Önerilir):**
+**5. İlk Kullanıcıları Oluşturun (Önerilir):**
 Uygulamayı test etmek için bir öğretmen ve bir öğrenci hesabı oluşturun.
 
 ```bash
