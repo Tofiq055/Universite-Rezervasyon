@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Silme Onayı{% endblock %}
+
+{% block content %}
+    <h2>Silme Onayı</h2>
+    <p><strong>{{ item_name }}</strong> adlı öğeyi silmek istediğinizden emin misiniz?</p>
+    <p class="text-danger">Bu işlem geri alınamaz. Eğer bu bir kategori ise, içindeki tüm cihazlar silinmelidir. Eğer bir cihaz ise, tüm rezervasyonları silinmelidir.</p>
+
+    <form method="POST" action="">
+        <button type="submit" name="confirm" class="btn btn-danger">Evet, Sil</button>
+        <a href="{{ url_for('teacher.manage_inventory') }}" class="btn">İptal</a>
+    </form>
+{% endblock %}

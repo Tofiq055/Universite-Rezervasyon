@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Envanter Yönetimi{% endblock %}
+
+{% block content %}
+    <h2>Envanter Yönetimi</h2>
+    <p>Buradan kategorileri ve cihazları yönetebilirsiniz.</p>
+
+    <div class="management-section">
+        <div class="management-header">
+            <h3>Kategoriler</h3>
+            <a href="{{ url_for('teacher.add_category') }}" class="btn btn-primary">Yeni Kategori Ekle</a>
+        </div>
+        <ul class="management-list">
+            {% for category in categories %}
+            <li>
+                <span>{{ category.name }} ({{ category.devices.count() }} cihaz)</span>
+                <div class="management-actions">
+                    <a href="{{ url_for('teacher.edit_category', category_id=category.id) }}" class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('teacher.delete_item', item_type='category', item_id=category.id) }}" class="btn btn-sm btn-danger">Sil</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="management-section">
+        <div class="management-header">
+            <h3>Cihazlar</h3>
+            <a href="{{ url_for('teacher.add_device') }}" class="btn btn-primary">Yeni Cihaz Ekle</a>
+        </div>
+        <ul class="management-list">
+            {% for device in devices %}
+            <li>
+                <span>{{ device.name }} (Kategori: {{ device.category.name }})</span>
+                <div class="management-actions">
+                    <a href="{{ url_for('teacher.edit_device', device_id=device.id) }}" class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('teacher.delete_item', item_type='device', item_id=device.id) }}" class="btn btn-sm btn-danger">Sil</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

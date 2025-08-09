@@ -1,60 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Öğretmen Paneli{% endblock %}
+{% block title %}Bekleyen İstekler{% endblock %}
 
 {% block content %}
-<div class="dashboard-container">
-    <div class="dashboard-forms">
-        </div>
-
-    <div class="dashboard-main-content">
-        <div class="dashboard-inventory">
-            </div>
-
-        <div class="dashboard-requests">
-            <h3>Bekleyen Rezervasyon İstekleri</h3>
-            {# pending_reservations listesini kategorilere göre grupla #}
-            {% set requests_by_category = pending_reservations | groupby('device.category_id') %}
-            
-            {% for group in requests_by_category %}
-                {% set category = group.list[0].device.category %}
-                <div class="category-block request-category-block">
-                    <div class="category-header">
-                        <h4>{{ category.name }}</h4>
-                        <div class="bulk-actions">
-                            <a href="{{ url_for('teacher.approve_category', category_id=category.id) }}" 
-                               class="btn btn-success btn-sm" 
-                               onclick="return confirm('Bu kategorideki TÜM bekleyen istekleri ONAYLAMAK istediğinizden emin misiniz?');">
-                               Tümünü Onayla
-                            </a>
-                            <a href="{{ url_for('teacher.reject_category', category_id=category.id) }}" 
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Bu kategorideki TÜM bekleyen istekleri REDDETMEK istediğinizden emin misiniz?');">
-                               Tümünü Reddet
-                            </a>
-                        </div>
+    <h2>Bekleyen Rezervasyon İstekleri</h2>
+    
+    {% if requests_by_category %}
+        {# Python'dan gelen gruplanmış sözlük üzerinde döngü kuruyoruz #}
+        {% for category, reservations in requests_by_category.items() %}
+            <div class="category-block request-category-block">
+                <div class="category-header">
+                    <h4>{{ category.name }}</h4>
+                    <div class="bulk-actions">
+                        <a href="{{ url_for('teacher.approve_category', category_id=category.id) }}" 
+                           class="btn btn-success btn-sm" 
+                           onclick="return confirm('Bu kategorideki TÜM bekleyen istekleri ONAYLAMAK istediğinizden emin misiniz?');">
+                           Tümünü Onayla
+                        </a>
+                        <a href="{{ url_for('teacher.reject_category', category_id=category.id) }}" 
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Bu kategorideki TÜM bekleyen istekleri REDDETMEK istediğinizden emin misiniz?');">
+                           Tümünü Reddet
+                        </a>
                     </div>
-                    
-                    <ul class="request-list">
-                        {% for reservation in group.list %}
-                        <li>
-                            <div class="request-info">
-                                <strong>{{ reservation.requester.name }}</strong> kullanıcısı,
-                                <strong>{{ reservation.device.name }}</strong> cihazını
-                                <strong>{{ reservation.reservation_date.strftime('%d-%m-%Y') }}</strong> tarihinde rezerve etmek istiyor.
-                            </div>
-                            <div class="request-actions">
-                                <a href="{{ url_for('teacher.approve_reservation', reservation_id=reservation.id) }}" class="btn btn-success">Onayla</a>
-                                <a href="{{ url_for('teacher.reject_reservation', reservation_id=reservation.id) }}" class="btn btn-danger">Reddet</a>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
                 </div>
-            {% else %}
-                 <p class="empty-text">Bekleyen rezervasyon isteği bulunmuyor.</p>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+                
+                <ul class="request-list">
+                    {% for reservation in reservations %}
+                    <li>
+                        <div class="request-info">
+                            <strong>{{ reservation.requester.name }}</strong> kullanıcısı,
+                            <strong>{{ reservation.device.name }}</strong> cihazını
+                            <strong>{{ reservation.reservation_date.strftime('%d-%m-%Y') }}</strong> tarihinde rezerve etmek istiyor.
+                        </div>
+                        <div class="request-actions">
+                            <a href="{{ url_for('teacher.approve_reservation', reservation_id=reservation.id) }}" class="btn btn-success">Onayla</a>
+                            <a href="{{ url_for('teacher.reject_reservation', reservation_id=reservation.id) }}" class="btn btn-danger">Reddet</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+         <p class="empty-text">Bekleyen rezervasyon isteği bulunmuyor.</p>
+    {% endif %}
+
 {% endblock %}
