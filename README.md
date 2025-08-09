@@ -1,4 +1,4 @@
-````markdown
+
 # Üniversite Laboratuvar Rezervasyon Sistemi
 
 Python ve Flask tabanlı, öğrenci ve öğretmen rolleri için tasarlanmış bir laboratuvar cihazı rezervasyon sistemi.
@@ -16,7 +16,7 @@ Projeyi yerel makinenizde sıfırdan kurup çalıştırmak için aşağıdaki ad
 
 **1. Depoyu Klonlayın:**
 ```bash
-git clone [https://github.com/Tofiq055/Universite-Rezervasyon.git](https://github.com/Tofiq055/Universite-Rezervasyon.git)
+git clone https://github.com/Tofiq055/Universite-Rezervasyon
 cd Universite-Rezervasyon
 ````
 
