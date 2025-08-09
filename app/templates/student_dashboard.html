@@ -3,6 +3,33 @@
 {% block title %}Öğrenci Paneli{% endblock %}
 
 {% block content %}
-    <h2>Öğrenci Paneli</h2>
-    <p>Hoş geldiniz! Buradan cihazları görebilir ve rezervasyon yapabilirsiniz.</p>
-{% endblock %} 
+    <h2>Laboratuvar Cihazları</h2>
+    <p>Aşağıdan bir cihaz seçerek rezervasyon durumunu görüntüleyebilir ve istek oluşturabilirsiniz.</p>
+
+    <div class="inventory-display">
+        {% if categories %}
+            {% for category in categories %}
+                <div class="category-block">
+                    <h4>{{ category.name }}</h4>
+                    {% if category.devices.all() %}
+                        <ul class="device-list">
+                            {% for device in category.devices %}
+                                <li>
+                                    {# DEĞİŞİKLİK: Linki cihazın ID'sine göre oluşturuyoruz #}
+                                    <a href="{{ url_for('student.device_detail', device_id=device.id) }}">
+                                        {{ device.name }}
+                                        <span>(Stok: {{ device.quantity }})</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="empty-text">Bu kategoride henüz cihaz bulunmuyor.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-text">Sistemde görüntülenecek cihaz bulunmuyor.</p>
+        {% endif %}
+    </div>
+{% endblock %}

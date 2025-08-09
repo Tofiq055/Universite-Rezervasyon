@@ -2,3 +2,5 @@ flask
 flask_sqlalchemy
 werkzeug
 Flask-Migrate
+python-dotenv
+Flask-WTF

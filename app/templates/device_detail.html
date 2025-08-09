@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ device.name }} - Detaylar{% endblock %}
+
+{% block content %}
+    <h2>{{ device.name }}</h2>
+    <p><strong>Kategori:</strong> {{ device.category.name }}</p>
+    <p><strong>Açıklama:</strong> {{ device.description or 'Açıklama bulunmuyor.' }}</p>
+    <p><strong>Toplam Stok:</strong> {{ device.quantity }}</p>
+    <hr>
+
+    <h3>Rezervasyon Takvimi</h3>
+    <p>Lütfen rezervasyon yapmak istediğiniz müsait bir tarih seçin.</p>
+    
+    <form method="POST">
+        <div class="calendar-container">
+            {% for day, status in availability.items() %}
+                <div class="calendar-day">
+                    <label class="date-label {% if status == 'Dolu' %}disabled{% endif %}">
+                        <input type="radio" name="reservation_date" value="{{ day.isoformat() }}" {% if status == 'Dolu' %}disabled{% endif %}>
+                        <div class="date-content">
+                            <div class="day-month">{{ day.strftime('%d %b') }}</div>
+                            <div class="day-year">{{ day.year }}</div>
+                            <div class="day-status status-{{ status | lower }}">{{ status }}</div>
+                        </div>
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn" style="margin-top: 1.5rem;">Rezervasyon İsteği Gönder</button>
+    </form>
+{% endblock %}

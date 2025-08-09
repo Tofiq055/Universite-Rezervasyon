@@ -3,6 +3,65 @@
 {% block title %}Öğretmen Paneli{% endblock %}
 
 {% block content %}
-    <h2>Öğretmen Paneli</h2>
-    <p>Hoş geldiniz! Buradan cihazları yönetebilir ve rezervasyon isteklerini görebilirsiniz.</p>
-{% endblock %} 
+    <div class="dashboard-container">
+        <div class="dashboard-forms">
+            <div class="form-section">
+                <h3>Yeni Kategori Ekle</h3>
+                <form method="POST" action="">
+                    {{ category_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ category_form.name.label }}
+                        {{ category_form.name(class="form-control") }}
+                    </div>
+                    <button type="submit" name="submit_category" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Yeni Cihaz Ekle</h3>
+                <form method="POST" action="">
+                    {{ device_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ device_form.name.label }}
+                        {{ device_form.name(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ device_form.description.label }}
+                        {{ device_form.description(class="form-control", rows="3") }}
+                    </div>
+                    <div class="form-group">
+                        {{ device_form.quantity.label }}
+                        {{ device_form.quantity(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ device_form.category.label }}
+                        {{ device_form.category(class="form-control") }}
+                    </div>
+                    <button type="submit" name="submit_device" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="dashboard-inventory">
+            <h3>Mevcut Envanter</h3>
+            {% if categories %}
+                {% for category in categories %}
+                    <div class="category-block">
+                        <h4>{{ category.name }}</h4>
+                        {% if category.devices.all() %}
+                            <ul>
+                                {% for device in category.devices %}
+                                    <li>{{ device.name }} (Adet: {{ device.quantity }})</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="empty-text">Bu kategoride henüz cihaz bulunmuyor.</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-text">Henüz hiç kategori eklenmemiş.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
