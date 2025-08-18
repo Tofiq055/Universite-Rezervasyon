@@ -449,3 +449,18 @@ textarea.form-control {
 .btn-warning { background-color: #f39c12; }
 .btn-warning:hover { background-color: #e67e22; }
 .text-danger { color: #e74c3c; font-size: 0.9em; }
+.welcome-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.welcome-header h2 {
+    border-bottom: none; /* Mevcut h2 stilini ezelim */
+    margin-bottom: 0.5rem;
+}
+
+.welcome-header p {
+    font-size: 1.1em;
+    color: #555;
+}

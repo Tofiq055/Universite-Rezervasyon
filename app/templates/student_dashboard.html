@@ -3,10 +3,16 @@
 {% block title %}Öğrenci Paneli{% endblock %}
 
 {% block content %}
+    <!-- YENİ EKLENEN KARŞILAMA MESAJI -->
+    <div class="welcome-header">
+        <h2>Hoşgeldin, {{ session.get('user_name', 'Kullanıcı') }}!</h2>
+        <p>Aşağıdan bir cihaz seçerek rezervasyon yapabilir ve mevcut rezervasyonlarının durumunu görebilirsin.</p>
+    </div>
+
     <div class="dashboard-container">
+        <!-- Sol Sütun: Cihazlar -->
         <div class="inventory-display student-inventory">
-            <h2>Laboratuvar Cihazları</h2>
-            <p>Aşağıdan bir cihaz seçerek rezervasyon yapabilirsiniz.</p>
+            <h3>Laboratuvar Cihazları</h3>
             {% if categories %}
                 {% for category in categories %}
                     <div class="category-block">
@@ -32,14 +38,15 @@
             {% endif %}
         </div>
 
+        <!-- Sağ Sütun: Rezervasyonlarım -->
         <div class="my-reservations">
-            <h3>Rezervasyonlarım</h3>
+            <h3>Son Rezervasyonların</h3>
             {% if my_reservations %}
                 <ul class="request-list">
-                    {% for reservation in my_reservations %}
+                    {% for reservation in my_reservations[:5] %}
                         <li class="reservation-item status-{{ reservation.status }}">
                             <div class="request-info">
-                                <strong>{{ reservation.device.name }}</strong> cihazı için
+                                <strong>{{ reservation.device.name if reservation.device else 'Bilinmeyen Cihaz' }}</strong> cihazı için
                                 <strong>{{ reservation.reservation_date.strftime('%d-%m-%Y') }}</strong> tarihli talebiniz.
                             </div>
                             <div class="reservation-status">
@@ -54,3 +61,6 @@
         </div>
     </div>
 {% endblock %}
+
+
+<!-- Removed duplicate block definitions -->

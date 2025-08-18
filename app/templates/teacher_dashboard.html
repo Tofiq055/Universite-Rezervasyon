@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Bekleyen İstekler{% endblock %}
+{% block title %}Öğretmen Paneli{% endblock %}
 
 {% block content %}
-    <h2>Bekleyen Rezervasyon İstekleri</h2>
+    <!-- YENİ EKLENEN KARŞILAMA MESAJI -->
+    <div class="welcome-header">
+        <h2>Hoşgeldin, {{ session.get('user_name', 'Kullanıcı') }}!</h2>
+        <p>Buradan bekleyen rezervasyon isteklerini yönetebilirsiniz.</p>
+    </div>
     
+    <h3>Bekleyen Rezervasyon İstekleri</h3>
+
     {% if requests_by_category %}
         {# Python'dan gelen gruplanmış sözlük üzerinde döngü kuruyoruz #}
         {% for category, reservations in requests_by_category.items() %}
@@ -30,7 +36,7 @@
                     <li>
                         <div class="request-info">
                             <strong>{{ reservation.requester.name }}</strong> kullanıcısı,
-                            <strong>{{ reservation.device.name }}</strong> cihazını
+                            <strong>{{ reservation.device[0].name if reservation.device else 'Bilinmeyen Cihaz' }}</strong> cihazını
                             <strong>{{ reservation.reservation_date.strftime('%d-%m-%Y') }}</strong> tarihinde rezerve etmek istiyor.
                         </div>
                         <div class="request-actions">
@@ -47,3 +53,5 @@
     {% endif %}
 
 {% endblock %}
+
+
